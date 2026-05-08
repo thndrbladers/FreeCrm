@@ -92,6 +92,7 @@ public class ContactPage extends Base {
 			saveButton.click();
 			wait.until(ExpectedConditions.elementToBeClickable(getDriver().findElement(By
 					.xpath("//span[@class='selectable '][text()='" + o[0].toString() + " " + o[1].toString() + "']"))));
+			
 
 			new HomePage().clickContacts();
 
