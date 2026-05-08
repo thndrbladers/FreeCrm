@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pages vs Tests — Rules Cheatsheet</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 12.5px;
+      color: #1a1a2e;
+      background: #fff;
+      padding: 32px 40px;
+      max-width: 960px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f3460;
+      border-bottom: 3px solid #0f3460;
+      padding-bottom: 8px;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #fff;
+      background: #0f3460;
+      padding: 6px 12px;
+      border-radius: 4px 4px 0 0;
+      margin-top: 20px;
+      margin-bottom: 0;
+    }
+
+    .rule-body {
+      border: 1px solid #d0d7e3;
+      border-top: none;
+      border-radius: 0 0 4px 4px;
+      padding: 12px 14px;
+      background: #f8f9fc;
+    }
+
+    .tagline {
+      font-size: 12px;
+      font-style: italic;
+      color: #444;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      background: #eef2ff;
+      border-left: 3px solid #0f3460;
+      border-radius: 2px;
+    }
+
+    pre {
+      background: #1a1a2e;
+      color: #e0e0e0;
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      overflow-x: auto;
+      line-height: 1.6;
+      white-space: pre;
+    }
+
+    .good  { color: #4ade80; }
+    .bad   { color: #f87171; }
+    .note  { color: #facc15; }
+    .dim   { color: #94a3b8; }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .two-col pre { margin: 0; }
+
+    .master {
+      margin-top: 20px;
+      border: 2px solid #0f3460;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .master h2 {
+      margin-top: 0;
+      border-radius: 0;
+      font-size: 14px;
+    }
+
+    .master-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .master-col {
+      padding: 12px 14px;
+    }
+
+    .master-col:first-child {
+      border-right: 1px solid #d0d7e3;
+    }
+
+    .master-col h3 {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #0f3460;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+      margin-top: 6px;
+    }
+
+    th {
+      background: #e8edf7;
+      color: #0f3460;
+      font-weight: 700;
+      padding: 6px 10px;
+      text-align: left;
+      border: 1px solid #d0d7e3;
+    }
+
+    td {
+      padding: 5px 10px;
+      border: 1px solid #d0d7e3;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td { background: #f3f5fb; }
+
+    .badge-page  { background:#dbeafe; color:#1d4ed8; padding:1px 7px; border-radius:10px; font-size:10px; font-weight:700; }
+    .badge-test  { background:#dcfce7; color:#166534; padding:1px 7px; border-radius:10px; font-size:10px; font-weight:700; }
+    .badge-util  { background:#fef9c3; color:#854d0e; padding:1px 7px; border-radius:10px; font-size:10px; font-weight:700; }
+
+    .print-hint {
+      margin-top: 24px;
+      font-size: 10.5px;
+      color: #aaa;
+      text-align: center;
+    }
+
+    @media print {
+      body { padding: 16px 20px; }
+      .print-hint { display: none; }
+      h2 { break-after: avoid; }
+      .rule-body { break-inside: avoid; }
+      .master { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Pages vs Tests — Rules Cheatsheet</h1>
+  <div class="subtitle">Selenium + Java + TestNG + Page Object Model &nbsp;|&nbsp; thndrbladers/FreeCrm</div>
+
+  <!-- RULE 1 -->
+  <h2>Rule 1 — Pages execute, Tests direct</h2>
+  <div class="rule-body">
+    <div class="tagline">The Page does the action. The Test decides when, with what data, and what to verify.</div>
+    <div class="two-col">
+<pre><span class="bad">// ❌ Wrong — page is directing itself</span>
+public void fillAndSave(String file) {
+  List&lt;Object[]&gt; data =
+    new ExcelUtility(file).getExcelDataAsList();
+  for (Object[] row : data) {
+    firstNameInput.sendKeys(row[0].toString());
+    saveButton.click();
+  }
+}</pre>
+<pre><span class="good">// ✅ Correct — page just executes</span>
+public void fillContactForm(
+    String firstName, String lastName ...) {
+  firstNameInput.sendKeys(firstName);
+  lastNameInput.sendKeys(lastName);
+}
+
+public void saveContact() {
+  saveButton.click();
+}</pre>
+    </div>
+  </div>
+
+  <!-- RULE 2 -->
+  <h2>Rule 2 — Pages never own data</h2>
+  <div class="rule-body">
+    <div class="tagline">Data is always passed in. Pages never read files, never hardcode values.</div>
+    <div class="two-col">
+<pre><span class="bad">// ❌ Wrong — hardcoded data in page</span>
+public void fillForm() {
+  firstNameInput.sendKeys("John");
+}
+
+<span class="bad">// ❌ Wrong — page loads the file</span>
+public void fillForm(String file) {
+  List&lt;Object[]&gt; data =
+    new ExcelUtility(file).getExcelDataAsList();
+}</pre>
+<pre><span class="good">// ✅ Correct — test loads data,
+//             passes to the page</span>
+
+<span class="dim">// In Test:</span>
+List&lt;Object[]&gt; data = new ExcelUtility(
+  "TestData", filePath).getExcelDataAsList();
+
+contactPage.fillContactForm(
+  data[0][0].toString(),
+  data[0][1].toString() ...);</pre>
+    </div>
+  </div>
+
+  <!-- RULE 3 -->
+  <h2>Rule 3 — Pages never loop</h2>
+  <div class="rule-body">
+    <div class="tagline">Iteration is always the test's job. If you write a for loop in a page — move it to the test.</div>
+    <div class="two-col">
+<pre><span class="bad">// ❌ Wrong — loop inside a page method</span>
+public void createMultiple(
+    List&lt;Object[]&gt; rows) {
+  for (Object[] row : rows) {
+    createButton.click();
+    firstNameInput.sendKeys(row[0].toString());
+    saveButton.click();
+  }
+}</pre>
+<pre><span class="good">// ✅ Correct — loop lives in the test</span>
+for (Object[] row : data) {
+  contactPage.clickCreate();
+  contactPage.fillContactForm(
+    row[0].toString(),
+    row[1].toString() ...);
+  contactPage.saveContact();
+}</pre>
+    </div>
+  </div>
+
+  <!-- RULE 4 -->
+  <h2>Rule 4 — Pages never assert</h2>
+  <div class="rule-body">
+    <div class="tagline">Pages only return values or booleans. The test decides what to do with them.</div>
+    <div class="two-col">
+<pre><span class="bad">// ❌ Wrong — assertion inside the page</span>
+public void verifyContactInList(
+    String name) {
+  Assert.assertTrue(
+    contactList.isDisplayed(),
+    "Contact not found");
+}</pre>
+<pre><span class="good">// ✅ Page returns state</span>
+public boolean isContactInList(
+    String firstName, String lastName) {
+  try {
+    return getDriver().findElement(By.xpath(
+      "//span[text()='" + firstName
+      + " " + lastName + "']")).isDisplayed();
+  } catch (NoSuchElementException e) {
+    return false;
+  }
+}
+
+<span class="good">// ✅ Test asserts it</span>
+sa.assertTrue(
+  contactPage.isContactInList("John","Doe"),
+  "AC5 FAILED: Contact not in list");</pre>
+    </div>
+  </div>
+
+  <!-- RULE 5 -->
+  <h2>Rule 5 — Pages never navigate away from themselves</h2>
+  <div class="rule-body">
+    <div class="tagline">Never call another page's constructor silently inside a void method. The test decides where to go next.</div>
+    <div class="two-col">
+<pre><span class="bad">// ❌ Wrong — navigates silently</span>
+public void saveContact() {
+  saveButton.click();
+  new HomePage().clickContacts();
+  <span class="dim">// who told this page to go back?</span>
+}</pre>
+<pre><span class="good">// ✅ Page only saves</span>
+public void saveContact() {
+  saveButton.click();
+}
+
+<span class="good">// ✅ Test decides navigation</span>
+contactPage.saveContact();
+homePage.clickContacts();</pre>
+    </div>
+  </div>
+
+  <!-- RULE 6 -->
+  <h2>Rule 6 — If a click navigates, return the next Page Object</h2>
+  <div class="rule-body">
+    <div class="tagline">Never return void from a method that takes you to a new page.</div>
+    <div class="two-col">
+<pre><span class="bad">// ❌ Wrong — navigates, returns nothing</span>
+public void clickContacts() {
+  contactsMenu.click();
+}</pre>
+<pre><span class="good">// ✅ Correct — returns where you land</span>
+public ContactPage clickContacts() {
+  contactsMenu.click();
+  return new ContactPage();
+}
+
+<span class="good">// Enables clean chaining in test:</span>
+ContactPage contactPage =
+  new LoginPage()
+    .login("user@mail.com", "Pass@1")
+    .clickContacts();</pre>
+    </div>
+  </div>
+
+  <!-- RULE 7 -->
+  <h2>Rule 7 — One method = one user intention</h2>
+  <div class="rule-body">
+    <div class="tagline">Multiple lines are fine if they serve ONE user intention. The "and" test — if you need "and" to describe it, split it.</div>
+    <div class="two-col">
+<pre><span class="bad">// ❌ Wrong — "and" = two intentions</span>
+public void fillFormAndSave(...) {
+  firstNameInput.sendKeys(firstName);
+  saveButton.click();
+}</pre>
+<pre><span class="good">// ✅ Split by intention</span>
+public void fillContactForm(...) {
+  firstNameInput.sendKeys(firstName); ...
+}
+public void saveContact() {
+  saveButton.click();
+}
+
+<span class="good">// ✅ login() — 3 lines, ONE intention</span>
+public HomePage login(
+    String email, String password) {
+  emailInput.sendKeys(email);
+  passwordInput.sendKeys(password);
+  loginButton.click();
+  return new HomePage();
+}</pre>
+    </div>
+  </div>
+
+  <!-- MASTER REFERENCE -->
+  <div class="master">
+    <h2>Master Reference</h2>
+    <div class="master-grid">
+      <div class="master-col">
+        <h3>Where does this code live?</h3>
+        <table>
+          <tr><th>If it…</th><th>Goes in</th></tr>
+          <tr><td>Touches the DOM</td><td><span class="badge-page">Page</span></td></tr>
+          <tr><td>Loops over data</td><td><span class="badge-test">Test</span></td></tr>
+          <tr><td>Reads a file (Excel/CSV)</td><td><span class="badge-test">Test</span> calls <span class="badge-util">Utility</span></td></tr>
+          <tr><td>Asserts something</td><td><span class="badge-test">Test</span></td></tr>
+          <tr><td>Navigates to another page</td><td><span class="badge-page">Page</span> (return next Page)</td></tr>
+          <tr><td>Is generic, no page context</td><td><span class="badge-util">Utility</span></td></tr>
+          <tr><td>Driver setup / teardown</td><td><span class="badge-page">Base</span></td></tr>
+        </table>
+      </div>
+      <div class="master-col">
+        <h3>The "and" test — split or keep?</h3>
+        <table>
+          <tr><th>Description</th><th>Decision</th></tr>
+          <tr><td>"I logged in"</td><td><span class="badge-page">Keep — one intention</span></td></tr>
+          <tr><td>"I filled the form"</td><td><span class="badge-page">Keep — one intention</span></td></tr>
+          <tr><td>"I filled the form <b>and</b> saved"</td><td><span class="badge-test">Split into 2 methods</span></td></tr>
+          <tr><td>"I saved <b>and</b> navigated back"</td><td><span class="badge-test">Split — nav in test</span></td></tr>
+          <tr><td>"I loaded data <b>and</b> filled form"</td><td><span class="badge-test">Split — data in test</span></td></tr>
+        </table>
+
+        <h3 style="margin-top:12px;">Return type rules</h3>
+        <table>
+          <tr><th>Scenario</th><th>Return</th></tr>
+          <tr><td>Click stays on same page</td><td><code>void</code> or <code>this</code></td></tr>
+          <tr><td>Click goes to a new page</td><td><code>new ThatPage()</code></td></tr>
+          <tr><td>Click opens a modal/form</td><td><code>void</code> or <code>this</code></td></tr>
+          <tr><td>Boolean state check</td><td><code>boolean</code></td></tr>
+          <tr><td>Get text/value from page</td><td><code>String</code></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <p class="print-hint">To save as PDF: Ctrl+P (or Cmd+P on Mac) → Destination: Save as PDF → Save</p>
+
+</body>
+</html>
