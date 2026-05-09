@@ -12,7 +12,7 @@ import com.freecrm.base.Base;
 import com.freecrm.pages.LoginPage;
 import com.freecrm.utility.ExcelReaderUtility;
 
-public class LoginPageTest extends Base {
+public class FCRM_2_LoginPageTest extends Base {
 
 	LoginPage loginPage;
 
