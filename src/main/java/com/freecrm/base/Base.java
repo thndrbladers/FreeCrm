@@ -21,7 +21,7 @@ public class Base {
 	private final static ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
 	private final Properties property;
 	private final String environment;
-	public static Wait wait;
+	public static WebDriverWait wait;
 
 	public Base() {
 		this.property = new Properties();

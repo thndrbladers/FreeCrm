@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.freecrm.base.Base;
-import com.freecrm.utility.ExcelUtility;
+import com.freecrm.utility.ExcelReaderUtility;
 
 public class ContactPage extends Base {
 
@@ -56,6 +56,21 @@ public class ContactPage extends Base {
 	@FindBy(xpath = "//button[text()='Save']")
 	WebElement saveButton;
 
+	@FindBy(xpath = "//span[text()='Contacts']")
+	WebElement contactsMenu;
+
+	@FindBy(xpath = "//div[@title='Select All']")
+	WebElement selectAllCheckbox;
+
+	@FindBy(xpath = "//div[@name='action' and @role='listbox']")
+	WebElement actionDropdown;
+
+	@FindBy(xpath = "(//div[@role='button']/i[@class='checkmark icon'])[1]")
+	WebElement checkmarkButton;
+
+	@FindBy(xpath = "//div[@class='ui warning message']/p[text()='No records found']")
+	WebElement noRecordsFoundMessage;
+
 	public ContactPage() {
 		PageFactory.initElements(getDriver(), this);
 	}
@@ -66,46 +81,73 @@ public class ContactPage extends Base {
 				+ "']/parent::div//i/following-sibling::span[text()='" + searchOption + "']")).click();
 	}
 
-	public void fillAndSaveContactForms(String sheetName, String fileName) {
-		ExcelUtility excelUtility = new ExcelUtility(sheetName, fileName);
-		List<Object[]> list = excelUtility.getExcelDataAsList();
+	public void selectAction(String action) {
+		actionDropdown.click();
+		getDriver().findElement(By.xpath("(//div[@role='option']/span[text()='" + action + "'])[1]")).click();
+	}
 
-		for (Object[] o : list) {
-			createButton.click();
-			firstNameInput.sendKeys(o[0].toString());
-			lastNameInput.sendKeys(o[1].toString());
-			emailInput.sendKeys(o[2].toString());
-			streetAddressInput.sendKeys(o[3].toString());
-			cityInput.sendKeys(o[4].toString());
-			stateInput.sendKeys(o[5].toString());
-			postCodeInput.sendKeys(o[6].toString());
+	public void clickCheckmark(String confirmation) {
+		checkmarkButton.click();
+		getDriver().findElement(By.xpath("//div[@class='actions']/button[text()='" + confirmation + "']")).click();
+	}
 
-			countrySearchInput.clear();
-			countrySearchInput.sendKeys(o[7].toString());
-			clickInputSearchOption("Address", o[7].toString());
+	/** Clicks the Create button to open the new contact form */
+	public void clickCreate() {
+		createButton.click();
+	}
 
-			phoneNumberCountryCodeSearchInput.clear();
-			phoneNumberCountryCodeSearchInput.sendKeys(o[9].toString());
-			clickInputSearchOption("Phone", o[7].toString());
+	public void selectAllContacts() {
+		selectAllCheckbox.click();
+	}
 
-			phoneNumberInput.sendKeys(o[8].toString());
-			saveButton.click();
-			wait.until(ExpectedConditions.elementToBeClickable(getDriver().findElement(By
-					.xpath("//span[@class='selectable '][text()='" + o[0].toString() + " " + o[1].toString() + "']"))));
-			
+	public boolean isNoContactsFoundMessageDisplayed() {
+		return noRecordsFoundMessage.isDisplayed();
+	}
 
-			new HomePage().clickContacts();
+	/** Fills all form fields for a single contact */
+	public void fillContactForm(String firstName, String lastName, String email, String street, String city,
+			String state, String postCode, String country, String phone, String countryCode) {
+		firstNameInput.sendKeys(firstName);
+		lastNameInput.sendKeys(lastName);
+		emailInput.sendKeys(email);
+		streetAddressInput.sendKeys(street);
+		cityInput.sendKeys(city);
+		stateInput.sendKeys(state);
+		postCodeInput.sendKeys(postCode);
+		countrySearchInput.clear();
+		countrySearchInput.sendKeys(country);
+		clickInputSearchOption("Address", country);
+		phoneNumberCountryCodeSearchInput.clear();
+		phoneNumberCountryCodeSearchInput.sendKeys(countryCode);
+		clickInputSearchOption("Phone", countryCode);
+		phoneNumberInput.sendKeys(phone);
+	}
 
-		}
+	/** Clicks Save and waits for the new contact to appear in the list */
+	public void saveContact(String firstName, String lastName) {
 
+		saveButton.click();
+
+		By contactName = By.xpath("//span[@class='selectable '][text()='" + firstName + " " + lastName + "']");
+
+		wait.until(ExpectedConditions.elementToBeClickable(contactName));
 	}
 
 	public String contactPageTitle() {
 		return getDriver().getTitle();
 	}
 
+	public ContactPage clickContacts() {
+		contactsMenu.click();
+		// To collapse the user menu if it's open and blocking the view of the contacts
+		// page
+		getDriver().findElement(By.xpath("//span[@class='user-display']")).click();
+
+		return new ContactPage();
+
+	}
+
 	public String contactPageUrl() {
 		return getDriver().getCurrentUrl();
 	}
-
 }

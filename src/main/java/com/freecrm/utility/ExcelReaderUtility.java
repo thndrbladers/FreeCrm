@@ -9,17 +9,19 @@ import java.util.List;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class ExcelUtility {
+public class ExcelReaderUtility {
 
 	XSSFWorkbook workbook;
 	XSSFSheet sheet;
+	private static final String BASE_PATH = System.getProperty("user.dir") + "/src/main/java/com/freecrm/testdata/";
 
-	public ExcelUtility(String sheetName, String filePath) {
-		try (FileInputStream is = new FileInputStream(filePath)) {
-			this.workbook = new XSSFWorkbook(is);
+	public ExcelReaderUtility(String sheetName, String fileName) {
+
+		try (FileInputStream fis = new FileInputStream(BASE_PATH + fileName)) {
+			this.workbook = new XSSFWorkbook(fis);
 			this.sheet = workbook.getSheet(sheetName);
 
-			System.out.println("Excel file loaded successfully: " + filePath);
+			System.out.println("Excel file loaded successfully: " + BASE_PATH + fileName);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -37,7 +39,7 @@ public class ExcelUtility {
 				temp[i][j] = sheet.getRow(i + 1).getCell(j).getStringCellValue();
 			}
 		}
-
+		closeWorkbook();
 		return temp;
 
 	}
@@ -52,19 +54,31 @@ public class ExcelUtility {
 		for (int i = 0; i < rowCount; i++) {
 			temp = new Object[colCount];
 			for (int j = 0; j < colCount; j++) {
-				temp[j] = sheet.getRow(i + 1).getCell(j).getStringCellValue();
+				temp[j] = sheet.getRow(i + 1).getCell(j).getStringCellValue() == null ? ""
+						: sheet.getRow(i + 1).getCell(j).getStringCellValue();
 			}
 			oArray.add(temp);
 		}
 
+		closeWorkbook();
 		return oArray;
 
 	}
 
+	public void closeWorkbook() {
+		try {
+			if (workbook != null) {
+				workbook.close();
+				System.out.println("Excel workbook closed successfully.");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/*
-	 * public static void main(String[] args) { ExcelUtility excelUtility = new
-	 * ExcelUtility("TestData", System.getProperty("user.dir") +
-	 * "/src/main/java/com/freecrm/testdata/selenium_test_data_10_rows.xlsx");
+	 * public static void main(String[] args) { ExcelReaderUtility excelUtility =
+	 * new ExcelReaderUtility("TestData", "create_contacts_testdata.xlsx");
 	 * Object[][] data = excelUtility.getExcelData();
 	 * 
 	 * for (Object[] row : data) { for (Object cell : row) { System.out.print(cell +
@@ -77,7 +91,8 @@ public class ExcelUtility {
 	 * 
 	 * System.out.println(); }
 	 * 
-	 * System.out.println(list.toString());
+	 * ExcelWriterUtility ew = new ExcelWriterUtility("test", "output.xlsx");
+	 * ew.writeTableInExcel(list);
 	 * 
 	 * }
 	 */

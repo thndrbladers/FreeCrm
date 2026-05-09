@@ -1,8 +1,10 @@
 package com.freecrm.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.freecrm.base.Base;
 
@@ -19,21 +21,28 @@ public class LoginPage extends Base {
 
 	@FindBy(xpath = "//a[text()='Sign Up']")
 	WebElement signUpLink;
-	
+
+	private By invalidLoginErrorLocator = By
+			.xpath("//div[text()='Something went wrong...']/following-sibling::p[contains(text(),'Invalid')]");
+
 	public LoginPage() {
 		PageFactory.initElements(getDriver(), this);
 	}
 
 	public HomePage login(String email, String password) {
 
-		System.out.println("Entered here");
-
 		emailInput.sendKeys(email);
 		passwordInput.sendKeys(password);
 		loginButton.click();
-		System.out.println("Entered here");
 
 		return new HomePage();
+	}
+
+	public boolean isInvalidLoginErrorDisplayed() {
+
+		WebElement error = wait.until(ExpectedConditions.visibilityOfElementLocated(invalidLoginErrorLocator));
+
+		return error.isDisplayed();
 	}
 
 	public void clickSignUp() {
