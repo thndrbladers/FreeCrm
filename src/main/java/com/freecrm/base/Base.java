@@ -13,15 +13,19 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.events.EventFiringDecorator;
+import org.openqa.selenium.support.events.WebDriverListener;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.freecrm.listeners.FreeCrmListener;
 
 public class Base {
 
 	private final static ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
+	private final static ThreadLocal<WebDriverWait> threadLocalWait = new ThreadLocal<>();
 	private final Properties property;
 	private final String environment;
-	public static WebDriverWait wait;
 
 	public Base() {
 		this.property = new Properties();
@@ -76,14 +80,21 @@ public class Base {
 				.implicitlyWait(Duration.ofSeconds(Integer.valueOf(getProperty("implicitWait"))));
 		localDriver.get(getProperty("url"));
 
-		wait = new WebDriverWait(localDriver, Duration.ofSeconds(Integer.valueOf(getProperty("explicitWait"))));
+		threadLocalWait
+				.set(new WebDriverWait(localDriver, Duration.ofSeconds(Integer.valueOf(getProperty("explicitWait")))));
 
-		threadLocalDriver.set(localDriver);
+		WebDriverListener eventListener = new FreeCrmListener();
+		WebDriver decoratedDriver = new EventFiringDecorator<>(eventListener).decorate(localDriver);
+		threadLocalDriver.set(decoratedDriver);
 
 	}
 
 	public static WebDriver getDriver() {
 		return threadLocalDriver.get();
+	}
+
+	public static WebDriverWait getWait() {
+		return threadLocalWait.get();
 	}
 
 	private String resolveEnvironment() {
@@ -126,6 +137,7 @@ public class Base {
 		if (threadLocalDriver.get() != null) {
 			threadLocalDriver.get().quit();
 			threadLocalDriver.remove();
+			threadLocalWait.remove();
 		}
 	}
 

@@ -40,7 +40,7 @@ public class LoginPage extends Base {
 
 	public boolean isInvalidLoginErrorDisplayed() {
 
-		WebElement error = wait.until(ExpectedConditions.visibilityOfElementLocated(invalidLoginErrorLocator));
+		WebElement error = getWait().until(ExpectedConditions.visibilityOfElementLocated(invalidLoginErrorLocator));
 
 		return error.isDisplayed();
 	}

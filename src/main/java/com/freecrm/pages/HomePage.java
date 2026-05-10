@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.freecrm.base.Base;
 
@@ -22,7 +23,7 @@ public class HomePage extends Base {
 
 	@FindBy(xpath = "//div[@id='main-nav']//a/i/following-sibling::span")
 	List<WebElement> mainMenuItems;
-	
+
 	public HomePage() {
 		PageFactory.initElements(getDriver(), this);
 	}
@@ -43,6 +44,11 @@ public class HomePage extends Base {
 
 	public ContactPage clickContacts() {
 		contactsMenu.click();
+		// To collapse the user menu if it's open and blocking the view of the contacts
+		// page
+		getDriver().findElement(By.xpath("//span[@class='user-display']")).click();
+		getWait().until(ExpectedConditions
+				.invisibilityOf(getDriver().findElement(By.xpath("//div[contains(@class,'inline loader')]"))));
 
 		return new ContactPage();
 

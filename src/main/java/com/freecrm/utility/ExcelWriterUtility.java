@@ -37,14 +37,11 @@ public class ExcelWriterUtility {
 	}
 
 	public ExcelWriterUtility(String sheetName) {
-		String fileName = "output_File" + System.currentTimeMillis();
-		this(sheetName, fileName);
+		this(sheetName, "output_File" + System.currentTimeMillis());
 	}
 
 	public ExcelWriterUtility() {
-		String sheetName = "output_sheet";
-		String fileName = "output_File" + System.currentTimeMillis() + ".xlsx";
-		this(sheetName, fileName);
+		this("output_sheet", "output_File" + System.currentTimeMillis() + ".xlsx");
 	}
 
 	public void writeTableInExcel(List<Object[]> tableData) {

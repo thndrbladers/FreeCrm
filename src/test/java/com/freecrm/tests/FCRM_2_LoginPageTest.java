@@ -6,10 +6,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-
 import com.freecrm.base.Base;
 import com.freecrm.pages.LoginPage;
+import com.freecrm.reports.ExtentSoftAssert;
+import com.freecrm.reports.StepLogger;
 import com.freecrm.utility.ExcelReaderUtility;
 
 public class FCRM_2_LoginPageTest extends Base {
@@ -26,8 +26,8 @@ public class FCRM_2_LoginPageTest extends Base {
 	@Test(description = "Test to verify that user cannot login with invalid credentials", groups = {
 			"regression" }, dataProvider = "negativeLoginData")
 	public void negative_login_test(String email, String password) {
-		SoftAssert sa = new SoftAssert();
-
+		ExtentSoftAssert sa = new ExtentSoftAssert();
+		StepLogger.info("Attempting to login with email: " + email + " and password: " + password);
 		loginPage.login(email, password);
 		sa.assertTrue(loginPage.isInvalidLoginErrorDisplayed(),
 				"Invalid login error message should be displayed for email: " + email + " and password: " + password);

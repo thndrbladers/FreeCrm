@@ -2,18 +2,16 @@ package com.freecrm.flows;
 
 import java.util.Iterator;
 import java.util.List;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 import com.freecrm.base.Base;
 import com.freecrm.pages.ContactPage;
 import com.freecrm.pages.HomePage;
 import com.freecrm.pages.LoginPage;
+import com.freecrm.reports.ExtentSoftAssert;
 import com.freecrm.utility.ExcelReaderUtility;
 import com.freecrm.utility.ExcelWriterUtility;
 
@@ -24,7 +22,6 @@ public class FCRM_8_Create_New_Contact_Val extends Base {
 	ContactPage contactPage;
 
 	@BeforeMethod
-	// @BeforeClass
 	public void setUp() {
 		initialization();
 		this.loginPage = new LoginPage();
@@ -37,7 +34,7 @@ public class FCRM_8_Create_New_Contact_Val extends Base {
 
 	// dataProvider = "getTestData"
 	public void create_new_contact_val() {
-		SoftAssert sa = new SoftAssert();
+		ExtentSoftAssert sa = new ExtentSoftAssert();
 
 		sa.assertTrue(homePage.isHomeMenuDisplayed());
 		sa.assertEquals(contactPage.contactPageTitle(), "Free CRM");
@@ -125,7 +122,7 @@ public class FCRM_8_Create_New_Contact_Val extends Base {
 
 	public void delete_all_contacts_val() {
 
-		SoftAssert sa = new SoftAssert();
+		ExtentSoftAssert sa = new ExtentSoftAssert();
 
 		contactPage.selectAllContacts();
 		contactPage.selectAction("Delete");
@@ -147,7 +144,6 @@ public class FCRM_8_Create_New_Contact_Val extends Base {
 	}
 
 	@AfterMethod
-	// @AfterClass
 	public void tearDown() {
 		quitDriver();
 

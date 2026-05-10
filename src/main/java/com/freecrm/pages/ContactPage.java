@@ -130,7 +130,7 @@ public class ContactPage extends Base {
 
 		By contactName = By.xpath("//span[@class='selectable '][text()='" + firstName + " " + lastName + "']");
 
-		wait.until(ExpectedConditions.elementToBeClickable(contactName));
+		getWait().until(ExpectedConditions.elementToBeClickable(contactName));
 	}
 
 	public String contactPageTitle() {
