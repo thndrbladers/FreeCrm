@@ -26,8 +26,8 @@ public class FCRM_2_LoginPageTest extends Base {
 	@Test(description = "Test to verify that user cannot login with invalid credentials", groups = {
 			"regression" }, dataProvider = "negativeLoginData")
 	public void negative_login_test(String email, String password) {
+
 		ExtentSoftAssert sa = new ExtentSoftAssert();
-		StepLogger.info("Attempting to login with email: " + email + " and password: " + password);
 		loginPage.login(email, password);
 		sa.assertTrue(loginPage.isInvalidLoginErrorDisplayed(),
 				"Invalid login error message should be displayed for email: " + email + " and password: " + password);

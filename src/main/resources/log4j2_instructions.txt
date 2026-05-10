@@ -1,0 +1,170 @@
+# =============================================================================
+# LOG4J2 CONFIGURATION - FreeCRM Selenium 4 Test Automation
+# =============================================================================
+#
+# HOW LOGGING WORKS IN THIS PROJECT:
+#   Selenium 4 uses Java Util Logging (JUL) internally.
+#   Apache POI uses Log4j2 API directly.
+#   The log4j-jul bridge (configured in pom.xml surefire argLine) redirects
+#   ALL JUL logs into Log4j2, so this single file controls everything.
+#
+# LOG LEVELS (in order, lowest ? highest verbosity):
+#   OFF   ? logs nothing at all (master kill switch)
+#   FATAL ? only catastrophic errors
+#   ERROR ? only errors
+#   WARN  ? errors + warnings
+#   INFO  ? errors + warnings + key milestones (good for CI)
+#   DEBUG ? everything above + internal step-by-step activity
+#   TRACE ? most verbose, rarely needed
+#
+# QUICK KILL SWITCHES:
+#   - Kill ALL logging:         set rootLogger.level = off
+#   - Kill only file logging:   remove "file" from rootLogger.appenderRefs
+#   - Kill only console:        remove "console" from rootLogger.appenderRefs
+#   - Silence Selenium:         set logger.selenium.level = warn
+#   - Silence a specific group: change its level to off
+# =============================================================================
+
+
+# =============================================================================
+# ROOT LOGGER
+# =============================================================================
+# The catch-all for any logger not explicitly configured below.
+# Set to "warn" so third-party libraries you haven't listed are quiet.
+# OPTIONS: off | fatal | error | warn | info | debug | trace
+#
+# KILL SWITCH FOR EVERYTHING ? change to: rootLogger.level = off
+# =============================================================================
+rootLogger.level = warn
+
+# Which appenders (outputs) the root logger writes to.
+# Remove "file" to stop writing to disk. Remove "console" to stop console output.
+# KILL SWITCH FOR FILE OUTPUT  ? remove ", file"   from the value below
+# KILL SWITCH FOR ALL CONSOLE  ? remove "console, " from the value below
+rootLogger.appenderRefs = console, file
+rootLogger.appenderRef.console.ref = ConsoleAppender
+rootLogger.appenderRef.file.ref = FileAppender
+
+
+# =============================================================================
+# APPENDER: CONSOLE (prints to the IDE / terminal while tests run)
+# =============================================================================
+appender.console.type = Console
+appender.console.name = ConsoleAppender
+appender.console.layout.type = PatternLayout
+
+# Pattern breakdown:
+#   %d{yyyy-MM-dd HH:mm:ss,SSS}  ? timestamp with milliseconds
+#   %-5p                          ? log level, left-padded to 5 chars (e.g. "DEBUG")
+#   [%t]                          ? thread name in brackets (e.g. "[main]")
+#   %c{1}                         ? short class name only (e.g. "RemoteWebDriver")
+#                                   use %c for fully-qualified class name
+#   :%L                           ? line number in source file
+#   - %m%n                        ? the log message, then newline
+appender.console.layout.pattern = %d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%t] %c{1}:%L - %m%n
+
+
+# =============================================================================
+# APPENDER: FILE (writes to logs/application.log on disk)
+# =============================================================================
+appender.file.type = File
+appender.file.name = FileAppender
+appender.file.fileName = logs/application.log
+
+# append = false ? OVERWRITE the log file on every test run (clean slate)
+# append = true  ? APPEND to the existing file (keeps history across runs)
+appender.file.append = false
+
+appender.file.layout.type = PatternLayout
+appender.file.layout.pattern = %d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%t] %c{1}:%L - %m%n
+
+
+# =============================================================================
+# LOGGER: YOUR TEST CODE  (com.freecrm.*)
+# =============================================================================
+# Controls logs from your own classes (Base, pages, tests, utilities).
+# Set to INFO so your manual logger.info("Clicking login button") statements show.
+# Raise to DEBUG if you add logger.debug(...) calls in your code too.
+#
+# KILL SWITCH ? set level = off
+# =============================================================================
+logger.freecrm.name = com.freecrm
+logger.freecrm.level = off
+# additivity = false ? do NOT also send these to the root logger (avoids duplicate lines)
+logger.freecrm.additivity = false
+logger.freecrm.appenderRefs = console, file
+logger.freecrm.appenderRef.console.ref = ConsoleAppender
+logger.freecrm.appenderRef.file.ref = FileAppender
+
+
+# =============================================================================
+# LOGGER: SELENIUM 4 INTERNAL ACTIVITY  (org.openqa.selenium.*)
+# =============================================================================
+# This is your equivalent of the 2017 Apache HttpClient wire logs.
+# At DEBUG you will see:
+#   - Every WebDriver command  (newSession, get, findElement, click, quit ...)
+#   - HTTP POST/GET requests sent to ChromeDriver
+#   - ChromeDriver responses (status codes, session IDs)
+#   - W3C dialect negotiation
+#
+# Sub-packages you can tune individually if too noisy:
+#   org.openqa.selenium.remote          ? command encoding/decoding
+#   org.openqa.selenium.remote.http     ? raw HTTP to/from ChromeDriver
+#   org.openqa.selenium.chrome          ? Chrome-specific startup logs
+#   org.openqa.selenium.support.events  ? EventFiringDecorator listener calls
+#
+# KILL SWITCH ? set level = warn  (errors/warnings only, no internal activity)
+# =============================================================================
+logger.selenium.name = org.openqa.selenium
+logger.selenium.level = debug
+logger.selenium.additivity = false
+logger.selenium.appenderRefs = console, file
+logger.selenium.appenderRef.console.ref = ConsoleAppender
+logger.selenium.appenderRef.file.ref = FileAppender
+
+
+# =============================================================================
+# LOGGER: APACHE POI  (org.apache.poi.*)
+# =============================================================================
+# POI logs heavily at DEBUG when reading/writing Excel files ? mostly noise
+# about internal XML relationship parsing. Kept at WARN to suppress that.
+# Change to DEBUG only if you are debugging an Excel read/write bug.
+#
+# KILL SWITCH ? set level = off
+# =============================================================================
+logger.poi.name = org.apache.poi
+logger.poi.level = off
+logger.poi.additivity = false
+logger.poi.appenderRefs = console, file
+logger.poi.appenderRef.console.ref = ConsoleAppender
+logger.poi.appenderRef.file.ref = FileAppender
+
+
+# =============================================================================
+# OPTIONAL ADDITIONAL NOISE REDUCERS
+# Uncomment any of these to silence specific noisy sub-systems
+# =============================================================================
+
+# Chrome DevTools Protocol (CDP) internal chatter - very noisy at DEBUG
+#logger.cdp.name = org.openqa.selenium.devtools
+#logger.cdp.level = warn
+#logger.cdp.additivity = false
+#logger.cdp.appenderRefs = console, file
+#logger.cdp.appenderRef.console.ref = ConsoleAppender
+#logger.cdp.appenderRef.file.ref = FileAppender
+
+# Netty (used by Selenium BiDi / CDP transport layer)
+#logger.netty.name = io.netty
+#logger.netty.level = warn
+#logger.netty.additivity = false
+#logger.netty.appenderRefs = console, file
+#logger.netty.appenderRef.console.ref = ConsoleAppender
+#logger.netty.appenderRef.file.ref = FileAppender
+
+# WebDriverManager (auto driver download logs)
+#logger.wdm.name = io.github.bonigarcia.wdm
+#logger.wdm.level = info
+#logger.wdm.additivity = false
+#logger.wdm.appenderRefs = console, file
+#logger.wdm.appenderRef.console.ref = ConsoleAppender
+#logger.wdm.appenderRef.file.ref = FileAppender

@@ -63,6 +63,63 @@
 			<version>5.1.2</version>
 		</dependency>
 
+		<!-- ================================================================
+		     LOGGING DEPENDENCIES
+		     ================================================================
+		     WHY FOUR JARS?
+		     Selenium 4 uses Java Util Logging (JUL) internally.
+		     WebDriverManager uses SLF4J internally.
+		     Apache POI uses Log4j2 API directly.
+		     Without bridges, each system logs independently and your
+		     log4j2.properties file cannot control them.
+
+		     The bridge jars redirect foreign logging systems INTO Log4j2
+		     so that one properties file controls everything.
+		     ================================================================ -->
+
+		<!-- REQUIRED: The Log4j2 public API your own code calls.
+		     Use: LogManager.getLogger(MyClass.class) in your test classes.
+		     Without this, your manual logger.info(...) calls won't compile. -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.26.0</version>
+		</dependency>
+
+		<!-- REQUIRED: The Log4j2 engine that reads log4j2.properties and
+		     routes log events to the console / file appenders.
+		     Without this, nothing gets written anywhere. -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.26.0</version>
+		</dependency>
+
+		<!-- BRIDGE: Java Util Logging (JUL) → Log4j2
+		     Selenium 4 calls java.util.logging internally (e.g. RemoteWebDriver,
+		     HttpCommandExecutor). Without this jar those logs never reach Log4j2.
+		     The actual activation is done via the JVM arg in maven-surefire-plugin
+		     (see <argLine> below).
+		     KILL SWITCH: remove this dependency AND the <argLine> below.
+		                  Selenium internal logs will disappear entirely. -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-jul</artifactId>
+			<version>2.26.0</version>
+		</dependency>
+
+		<!-- BRIDGE: SLF4J → Log4j2
+		     WebDriverManager, Netty, and some RestAssured internals use SLF4J.
+		     This jar makes SLF4J delegate to Log4j2 so log4j2.properties
+		     controls those logs too.
+		     KILL SWITCH: remove this dependency.
+		                  SLF4J-based libraries will fall back to their own
+		                  default (usually prints to console unformatted). -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j2-impl</artifactId>
+			<version>2.26.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -73,6 +130,35 @@
 				<version>3.11.0</version>
 				<configuration>
 					<release>21</release>
+				</configuration>
+			</plugin>
+			<!-- ============================================================
+			     maven-surefire-plugin
+			     Runs your TestNG tests via: mvn test
+			     ============================================================ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.2.5</version>
+				<configuration>
+					<!-- argLine: JVM arguments passed to the test process at
+					startup.
+					     These must be set here (not in code) because the JUL bridge
+					     must replace the JUL LogManager BEFORE any class loads.
+					     If you set it in Java code it is often too late.
+
+					     -Djava.util.logging.manager=...LogManager
+					       → Replaces Java's default LogManager with Log4j2's version.
+					       → From that point, every java.util.logging call made by
+					         Selenium (or any other JUL-based library) is routed
+					         through Log4j2 and controlled by log4j2.properties.
+
+					     KILL SWITCH FOR SELENIUM INTERNAL LOGS:
+					       Remove the entire <argLine> element below.
+					       Selenium will fall back to its own silent JUL defaults
+					       and nothing will appear in your log file from it. -->
+					<argLine>
+						-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager</argLine>
 				</configuration>
 			</plugin>
 		</plugins>

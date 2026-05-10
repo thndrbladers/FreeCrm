@@ -6,7 +6,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import com.aventstack.extentreports.Status;
+//import com.aventstack.extentreports.Status;
 import com.freecrm.base.Base;
+import com.freecrm.reports.StepLogger;
+//import com.freecrm.utility.ScreenshotUtility;
+import com.freecrm.utility.ScreenshotUtility;
 
 public class LoginPage extends Base {
 
@@ -30,15 +35,19 @@ public class LoginPage extends Base {
 	}
 
 	public HomePage login(String email, String password) {
+		ScreenshotUtility.logScreenshot(Status.INFO,"Attempting to log in with email: " + email + ", password : " + password);
+		ScreenshotUtility.takeScreenshot();
 
 		emailInput.sendKeys(email);
 		passwordInput.sendKeys(password);
-		loginButton.click();
 
+		loginButton.click();
 		return new HomePage();
 	}
 
 	public boolean isInvalidLoginErrorDisplayed() {
+		StepLogger.info("Checking for invalid login error message");
+		ScreenshotUtility.logScreenshot(Status.INFO,"Checking for invalid login error message");
 
 		WebElement error = getWait().until(ExpectedConditions.visibilityOfElementLocated(invalidLoginErrorLocator));
 
@@ -46,6 +55,7 @@ public class LoginPage extends Base {
 	}
 
 	public void clickSignUp() {
+		ScreenshotUtility.logScreenshot(Status.INFO,"Clicking on Sign Up link");
 		signUpLink.click();
 	}
 

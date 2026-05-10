@@ -111,7 +111,7 @@ public class Base {
 
 	private void loadProperties() {
 
-		String file = "config/" + environment + ".properties";
+		String file = environment + ".properties";
 
 		try (InputStream is = getClass().getClassLoader().getResourceAsStream(file)) {
 

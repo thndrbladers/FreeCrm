@@ -12,8 +12,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.aventstack.extentreports.Status;
 import com.freecrm.base.Base;
+import com.freecrm.reports.StepLogger;
 import com.freecrm.utility.ExcelReaderUtility;
+import com.freecrm.utility.ScreenshotUtility;
 
 public class ContactPage extends Base {
 
@@ -76,37 +79,50 @@ public class ContactPage extends Base {
 	}
 
 	public void clickInputSearchOption(String section, String searchOption) {
+		ScreenshotUtility.logScreenshot(Status.INFO,
+				"Selecting '" + searchOption + "' from '" + section + "' search options");
 
 		getDriver().findElement(By.xpath("//label[text()='" + section
 				+ "']/parent::div//i/following-sibling::span[text()='" + searchOption + "']")).click();
 	}
 
 	public void selectAction(String action) {
+		ScreenshotUtility.logScreenshot(Status.INFO, "Selecting '" + action + "' from action dropdown");
 		actionDropdown.click();
 		getDriver().findElement(By.xpath("(//div[@role='option']/span[text()='" + action + "'])[1]")).click();
 	}
 
 	public void clickCheckmark(String confirmation) {
+		ScreenshotUtility.logScreenshot(Status.INFO,
+				"Clicking checkmark button and confirming with '" + confirmation + "'");
 		checkmarkButton.click();
 		getDriver().findElement(By.xpath("//div[@class='actions']/button[text()='" + confirmation + "']")).click();
 	}
 
 	/** Clicks the Create button to open the new contact form */
 	public void clickCreate() {
+		ScreenshotUtility.logScreenshot(Status.INFO, "Clicking Create button to open new contact form");
 		createButton.click();
 	}
 
 	public void selectAllContacts() {
+		ScreenshotUtility.logScreenshot(Status.INFO, "Selecting all contacts using the select all checkbox");
 		selectAllCheckbox.click();
 	}
 
 	public boolean isNoContactsFoundMessageDisplayed() {
+		ScreenshotUtility.logScreenshot(Status.INFO, "Checking if 'No records found' message is displayed");
 		return noRecordsFoundMessage.isDisplayed();
 	}
 
 	/** Fills all form fields for a single contact */
 	public void fillContactForm(String firstName, String lastName, String email, String street, String city,
 			String state, String postCode, String country, String phone, String countryCode) {
+		ScreenshotUtility.logScreenshot(Status.INFO,
+				"Filling contact form with provided details - First Name: " + firstName + ", Last Name: " + lastName
+						+ ", Email: " + email + ", Street: " + street + ", City: " + city + ", State: " + state
+						+ ", Post Code: " + postCode + ", Country: " + country + ", Phone: " + phone
+						+ ", Country Code: " + countryCode);
 		firstNameInput.sendKeys(firstName);
 		lastNameInput.sendKeys(lastName);
 		emailInput.sendKeys(email);
@@ -125,6 +141,9 @@ public class ContactPage extends Base {
 
 	/** Clicks Save and waits for the new contact to appear in the list */
 	public void saveContact(String firstName, String lastName) {
+		ScreenshotUtility.logScreenshot(Status.INFO,
+				"Saving contact and waiting for it to appear in the contact list - First Name: " + firstName
+						+ ", Last Name: " + lastName);
 
 		saveButton.click();
 
@@ -134,10 +153,15 @@ public class ContactPage extends Base {
 	}
 
 	public String contactPageTitle() {
+
+		ScreenshotUtility.logScreenshot(Status.INFO, "Getting contact page title");
 		return getDriver().getTitle();
 	}
 
 	public ContactPage clickContacts() {
+		StepLogger.info("Clicking on Contacts menu to navigate to contact page");
+		ScreenshotUtility.logScreenshot(Status.INFO, "Clicking on Contacts menu to navigate to contact page");
+
 		contactsMenu.click();
 		// To collapse the user menu if it's open and blocking the view of the contacts
 		// page
@@ -148,6 +172,7 @@ public class ContactPage extends Base {
 	}
 
 	public String contactPageUrl() {
+		ScreenshotUtility.logScreenshot(Status.INFO, "Getting contact page URL");
 		return getDriver().getCurrentUrl();
 	}
 }
