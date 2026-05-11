@@ -26,7 +26,10 @@ public class Base {
 	private final static ThreadLocal<WebDriver> threadLocalDriver = new ThreadLocal<>();
 	private final static ThreadLocal<WebDriverWait> threadLocalWait = new ThreadLocal<>();
 
-	/** Loaded once by the first Base instance; safe to read from any thread after that. */
+	/**
+	 * Loaded once by the first Base instance; safe to read from any thread after
+	 * that.
+	 */
 	private static final AtomicReference<Properties> staticConfig = new AtomicReference<>();
 
 	private final Properties property;
@@ -116,6 +119,8 @@ public class Base {
 
 	private void loadProperties() {
 
+		System.out.println("Environment identified : ---------------->" + environment);
+
 		String file = environment + ".properties";
 
 		try (InputStream is = getClass().getClassLoader().getResourceAsStream(file)) {
@@ -126,7 +131,8 @@ public class Base {
 
 			property.load(is);
 
-			// Publish to static config exactly once (first thread wins; all threads share the same env)
+			// Publish to static config exactly once (first thread wins; all threads share
+			// the same env)
 			staticConfig.compareAndSet(null, property);
 
 		} catch (IOException e) {
@@ -144,7 +150,8 @@ public class Base {
 	 * without holding a Base instance. Thread-safe: reads from an immutable
 	 * AtomicReference after the first Base is constructed.
 	 *
-	 * @return the property value, or {@code null} if config is not yet loaded or key is absent.
+	 * @return the property value, or {@code null} if config is not yet loaded or
+	 *         key is absent.
 	 */
 	public static String getConfig(String key) {
 		Properties cfg = staticConfig.get();
