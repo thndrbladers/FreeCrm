@@ -12,7 +12,7 @@ pipeline {
 
         stage('Build & Execute Tests') {
             steps {
-                bat 'mvn clean test -DsuiteXmlFile=sprint.xml'
+                bat 'mvn clean test -DsuiteXmlFile=feature.xml'
             }
         }
     }
