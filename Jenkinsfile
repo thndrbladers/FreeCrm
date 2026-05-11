@@ -11,8 +11,18 @@ pipeline {
         }
 
         stage('Build & Execute Tests') {
+
             steps {
-                bat 'mvn clean test -Denv=dev -DsuiteXmlFile=testng/features/${env.BRANCH_NAME}.xml'
+
+                script {
+
+                    def suitePath = bat(
+                        script: "dir /s /b FeatureXmlsByReleases\\${env.BRANCH_NAME}.xml",
+                        returnStdout: true
+                    ).trim()
+
+                    bat "mvn clean test -Denv=dev -DsuiteXmlFile=\"${suitePath}\""
+                }
             }
         }
     }
