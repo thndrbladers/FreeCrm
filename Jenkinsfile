@@ -12,7 +12,7 @@ pipeline {
 
         stage('Build & Execute Tests') {
             steps {
-                bat 'mvn clean test -DsuiteXmlFile=feature.xml'
+                bat 'mvn clean test -Denv=dev -DsuiteXmlFile=testng/features/${env.BRANCH_NAME}.xml'
             }
         }
     }

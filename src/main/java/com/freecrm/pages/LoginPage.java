@@ -45,6 +45,11 @@ public class LoginPage extends Base {
 		return new HomePage();
 	}
 
+	public String getPageTitle() {
+		StepLogger.info("Getting page title");
+		return getDriver().getTitle();
+	}
+
 	public boolean isInvalidLoginErrorDisplayed() {
 		StepLogger.info("Checking for invalid login error message");
 
