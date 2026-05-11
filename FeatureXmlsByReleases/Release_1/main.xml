@@ -1,6 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-
-<suite name="Main branch Smoke Suite" parallel="classes" thread-count="3">
+<suite name="Main Branch Suite" parallel="classes" thread-count="3">
 
 	<!--
 	    Parameters defined here are picked up by ExtentReportsListener automatically.
@@ -16,7 +15,6 @@
 	      - environment
 	      - browser (from properties file)
 	-->
-
 	<groups>
 		<run>
 			<include name="smoke" />
@@ -26,22 +24,24 @@
 	<parameter name="author" value="rahuldev.ghosh@freecrm.com" />
 	<parameter name="application" value="Free CRM" />
 
+
 	<listeners>
 
 		<listener class-name="com.freecrm.reports.ExtentReportsListener" />
-		<listener class-name="com.freecrm.listeners.FreeCrmAnnotationTransformer" />
-
+		<listener
+			class-name="com.freecrm.listeners.FreeCrmAnnotationTransformer" />
 	</listeners>
 
+
 	<test name="Main branch Tests">
+		<classes>
 
-		<packages>
+			<!-- Release 1 -->
+			<class name="com.freecrm.flows.FCRM_8_Create_New_Contact_Val" />
+			<class name="com.freecrm.tests.FCRM_2_LoginPageTest" />
+			<class name="com.freecrm.flows.FCRM_3_LoginFlow" />
 
-			<package name="com.freecrm.tests" />
-			<package name="com.freecrm.flows" />
-
-		</packages>
-
+		</classes>
 	</test>
 
 </suite>
