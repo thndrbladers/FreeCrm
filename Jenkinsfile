@@ -17,7 +17,10 @@ pipeline {
                 script {
 
                     def suitePath = bat(
-                        script: "dir /s /b FeatureXmlsByReleases\\${env.BRANCH_NAME}.xml",
+                        script: """
+                        @echo off
+                        dir /s /b FeatureXmlsByReleases\\${env.BRANCH_NAME}.xml
+                        """,
                         returnStdout: true
                     ).trim()
 
