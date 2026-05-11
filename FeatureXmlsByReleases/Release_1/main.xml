@@ -1,0 +1,47 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Main branch Smoke Suite" parallel="classes" thread-count="3">
+
+	<!--
+	    Parameters defined here are picked up by ExtentReportsListener automatically.
+	    Only values that CANNOT be auto-detected belong here:
+	      - author      : who owns / triggered this suite run
+	      - application : product under test
+
+	    Auto-detected:
+	      - OS
+	      - hostname
+	      - CI/CD platform
+	      - Java version
+	      - environment
+	      - browser (from properties file)
+	-->
+
+	<groups>
+		<run>
+			<include name="smoke" />
+		</run>
+	</groups>
+
+	<parameter name="author" value="rahuldev.ghosh@freecrm.com" />
+	<parameter name="application" value="Free CRM" />
+
+	<listeners>
+
+		<listener class-name="com.freecrm.reports.ExtentReportsListener" />
+		<listener class-name="com.freecrm.listeners.FreeCrmAnnotationTransformer" />
+
+	</listeners>
+
+	<test name="Main branch Tests">
+
+		<packages>
+
+			<package name="com.freecrm.tests" />
+			<package name="com.freecrm.flows" />
+
+		</packages>
+
+	</test>
+
+</suite>
