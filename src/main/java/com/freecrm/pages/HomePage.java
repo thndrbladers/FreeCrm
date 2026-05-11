@@ -56,6 +56,8 @@ public class HomePage extends Base {
 		getDriver().findElement(By.xpath("//span[@class='user-display']")).click();
 		getWait().until(ExpectedConditions
 				.invisibilityOf(getDriver().findElement(By.xpath("//div[contains(@class,'inline loader')]"))));
+		getWait().until(ExpectedConditions
+				.invisibilityOf(getDriver().findElement(By.xpath("//div[contains(@class,'inline loader')]"))));
 
 		return new ContactPage();
 
