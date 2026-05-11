@@ -19,6 +19,7 @@
 		<classes>
 			<class name="com.freecrm.flows.FCRM_8_Create_New_Contact_Val" />
 			<class name="com.freecrm.tests.FCRM_2_LoginPageTest" />
+			<class name="com.freecrm.flows.FCRM_3_LoginFlow" />
 		</classes>
 	</test>
 

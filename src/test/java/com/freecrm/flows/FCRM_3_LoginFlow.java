@@ -18,7 +18,7 @@ public class FCRM_3_LoginFlow extends Base {
 	LoginPage loginPage;
 	HomePage homePage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setUp() {
 		initialization();
 		loginPage = new LoginPage();
@@ -35,7 +35,7 @@ public class FCRM_3_LoginFlow extends Base {
 		sa.assertAll();
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void tearDown() {
 		quitDriver();
 	}

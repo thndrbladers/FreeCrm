@@ -16,14 +16,14 @@ public class FCRM_2_LoginPageTest extends Base {
 
 	LoginPage loginPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setUp() {
 		initialization();
 		loginPage = new LoginPage();
 
 	}
 
-	@Test(description = "Test to verify that user cannot login with invalid credentials", groups = { "smoke", "FCRM_2",
+	@Test(description = "Test to verify that user cannot login with invalid credentials", groups = { "FCRM_2",
 			"Release_1" }, dataProvider = "negativeLoginData")
 	public void negative_login_test(String email, String password) {
 
@@ -44,7 +44,7 @@ public class FCRM_2_LoginPageTest extends Base {
 		sa.assertAll();
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void tearDown() {
 		quitDriver();
 	}

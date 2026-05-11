@@ -21,7 +21,7 @@ public class FCRM_8_Create_New_Contact_Val extends Base {
 	HomePage homePage;
 	ContactPage contactPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setUp() {
 		initialization();
 		this.loginPage = new LoginPage();
@@ -143,7 +143,7 @@ public class FCRM_8_Create_New_Contact_Val extends Base {
 		return list.iterator();
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void tearDown() {
 		quitDriver();
 
