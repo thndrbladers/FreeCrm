@@ -20,7 +20,7 @@
 			<class name="com.freecrm.flows.FCRM_3_LoginFlow">
 
 				<methods>
-					<include name="verifyLoginPageTitle" />
+					<include name="verify_valid_login" />
 				</methods>
 
 			</class>

@@ -25,8 +25,9 @@ public class FCRM_3_LoginFlow extends Base {
 
 	}
 
-	@Test(description = "To verify Login page title", groups = { "smoke", "FCRM_3", "Release_1" })
-	public void verifyLoginPageTitle() {
+	@Test(description = "Verify that user can login with valid credentials", groups = { "smoke", "FCRM_3",
+			"Release_1" })
+	public void verify_valid_login() {
 		ExtentSoftAssert sa = new ExtentSoftAssert();
 		this.homePage = loginPage.login(Base.getConfig("username"), Base.getConfig("password"));
 		sa.assertTrue(homePage.isHomeMenuDisplayed(), "Home menu should be displayed after successful login");
