@@ -5,7 +5,6 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.freecrm.utility.ScreenshotUtility;
 
@@ -71,16 +70,11 @@ public class ExtentReportsListener implements ITestListener {
 	public void onTestFailure(ITestResult result) {
 		ExtentTest test = ExtentTestManager.getTest();
 		if (test != null) {
-			// Log the exception
 			test.log(Status.FAIL, "✘ Test FAILED: <b>" + result.getMethod().getMethodName() + "</b>");
 			test.log(Status.FAIL, result.getThrowable());
 
-			// Embed screenshot
-			String base64 = ScreenshotUtility.captureBase64Screenshot();
-			if (base64 != null) {
-				test.fail("Screenshot on failure:",
-						MediaEntityBuilder.createScreenCaptureFromBase64String(base64).build());
-			}
+			// Embed screenshot using the same inline-HTML style as ScreenshotUtility.logScreenshot()
+			ScreenshotUtility.logScreenshot(Status.FAIL, "Screenshot on failure");
 		}
 		ExtentTestManager.endTest();
 	}
@@ -98,10 +92,7 @@ public class ExtentReportsListener implements ITestListener {
 		}
 
 		// Optionally capture screenshot on skip too
-		String base64 = ScreenshotUtility.captureBase64Screenshot();
-		if (base64 != null) {
-			test.skip("Screenshot on skip:", MediaEntityBuilder.createScreenCaptureFromBase64String(base64).build());
-		}
+		ScreenshotUtility.logScreenshot(Status.SKIP, "Screenshot on skip");
 
 		ExtentTestManager.endTest();
 	}

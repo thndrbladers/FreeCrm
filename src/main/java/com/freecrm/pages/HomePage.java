@@ -32,24 +32,24 @@ public class HomePage extends Base {
 	}
 
 	public boolean isHomeMenuDisplayed() {
-		ScreenshotUtility.logScreenshot(Status.INFO,"Checking if Home menu is displayed");
+		StepLogger.info("Checking if Home menu is displayed");
 		return homeMenu.isDisplayed();
 	}
 
 	public void clickMainMenuItem(String menuItem) {
-		ScreenshotUtility.logScreenshot(Status.INFO,"Clicking on main menu item: " + menuItem);
+		StepLogger.info("Clicking on main menu item: " + menuItem);
 		getDriver().findElement(By.xpath("//span[text()=" + menuItem + "']")).click();
 
 	}
 
 	public void clickCalender() {
-		ScreenshotUtility.logScreenshot(Status.INFO,"Clicking on Calender menu");
+		StepLogger.info("Clicking on Calender menu");
 		calenderMenu.click();
 
 	}
 
 	public ContactPage clickContacts() {
-		ScreenshotUtility.logScreenshot(Status.INFO,"Clicking on Contacts menu");
+		StepLogger.info("Clicking on Contacts menu");
 		contactsMenu.click();
 		// To collapse the user menu if it's open and blocking the view of the contacts
 		// page

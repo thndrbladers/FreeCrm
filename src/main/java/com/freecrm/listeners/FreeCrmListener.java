@@ -41,7 +41,7 @@ public class FreeCrmListener implements WebDriverListener {
 	@Override
 	public void afterGet(WebDriver driver, String url) {
 		System.out.println("[AFTER NAVIGATE] Opened URL: " + driver.getCurrentUrl());
-		ScreenshotUtility.logScreenshot(Status.INFO, "Page loaded: " + driver.getCurrentUrl());
+		StepLogger.info( "Page loaded: " + driver.getCurrentUrl());
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class FreeCrmListener implements WebDriverListener {
 		String details = getElementDetails(element);
 		System.out.println("[AFTER CLICK] " + details);
 		// Single report entry: click details + screenshot together
-		ScreenshotUtility.logScreenshot(Status.INFO, "Clicked: " + details);
+		StepLogger.info( "Clicked: " + details);
 	}
 
 	// =========================================

@@ -9,8 +9,6 @@ import org.openqa.selenium.io.FileHandler;
 
 import org.testng.Reporter;
 
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.freecrm.base.Base;
 import com.freecrm.reports.ExtentTestManager;
@@ -50,7 +48,7 @@ public class ScreenshotUtility {
 		}
 		try {
 			String projectPath = System.getProperty("user.dir");
-			File screenshotDir = new File(projectPath + "/src/main/java/screenshots");
+			File screenshotDir = new File(projectPath + "/src/test/resources/screenshots");
 
 			// AUTO-CREATE: Build the folder if it's missing
 			if (!screenshotDir.exists()) {
@@ -66,8 +64,8 @@ public class ScreenshotUtility {
 
 			TakesScreenshot screenshot = (TakesScreenshot) driver;
 			File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
-			File destinationFile = new File(
-					projectPath + "/src/test/resources/screenshots/" + testName + "_" + System.currentTimeMillis() + ".png");
+			File destinationFile = new File(projectPath + "/src/test/resources/screenshots/" + testName + "_"
+					+ System.currentTimeMillis() + ".png");
 			FileHandler.copy(sourceFile, destinationFile);
 
 		} catch (Exception e) {
@@ -91,17 +89,36 @@ public class ScreenshotUtility {
 	 * @param status  ExtentReports Status (INFO, PASS, WARNING, FAIL, …)
 	 * @param message Label shown next to the screenshot thumbnail in the report
 	 */
+	private static String buildImgHtml(String base64) {
+		String onclick = "(function(src){" + "var ov=document.createElement('div');"
+				+ "ov.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);display:flex;align-items:center;justify-content:center;z-index:99999;cursor:zoom-out;';"
+				+ "var img=document.createElement('img');" + "img.src=src;"
+				+ "img.style.cssText='max-width:95%;max-height:95%;border-radius:6px;box-shadow:0 0 30px #000;';"
+				+ "ov.appendChild(img);" + "ov.onclick=function(){document.body.removeChild(ov);};"
+				+ "document.body.appendChild(ov);" + "})(this.src)";
+		return "<br><img src='data:image/png;base64," + base64
+				+ "' style='width:480px;height:auto;border:1px solid #ccc;border-radius:4px;margin-top:6px;cursor:zoom-in;'"
+				+ " onclick=\"" + onclick + "\"" + " title='Click to expand'/>";
+	}
+
 	public static void logScreenshot(Status status, String message) {
 		String base64 = captureBase64Screenshot();
 		if (base64 != null && ExtentTestManager.getTest() != null) {
-			ExtentTestManager.getTest().log(status, message,
-					MediaEntityBuilder.createScreenCaptureFromBase64String(base64).build());
+			String icon = switch (status) {
+			case PASS -> "✔";
+			case FAIL -> "✘";
+			case WARNING -> "⚠";
+			case SKIP -> "⚠";
+			default -> "ℹ";
+			};
+			String formatted = "<b>" + icon + " " + message + "</b>";
+			ExtentTestManager.getTest().log(status, formatted + buildImgHtml(base64));
 		}
 	}
 
 	/**
-	 * Overload: logs step + value detail + screenshot in a single call.
-	 * Replaces the need to call StepLogger and logScreenshot separately.
+	 * Overload: logs step + value detail + screenshot in a single call. Replaces
+	 * the need to call StepLogger and logScreenshot separately.
 	 *
 	 * <pre>
 	 * ScreenshotUtility.logScreenshot(Status.FAIL, "Login failed", "URL: " + driver.getCurrentUrl());
@@ -111,18 +128,19 @@ public class ScreenshotUtility {
 		String base64 = captureBase64Screenshot();
 		if (base64 != null && ExtentTestManager.getTest() != null) {
 			String icon = switch (status) {
-				case PASS    -> "✔";
-				case FAIL    -> "✘";
-				case WARNING -> "⚠";
-				default      -> "ℹ";
+			case PASS -> "✔";
+			case FAIL -> "✘";
+			case WARNING -> "⚠";
+			case SKIP -> "⚠";
+			default -> "ℹ";
 			};
 			StringBuilder msg = new StringBuilder();
 			msg.append("<b>").append(icon).append(" ").append(step).append("</b>");
 			if (value != null && !value.isBlank()) {
 				msg.append(" → <code>").append(value).append("</code>");
 			}
-			ExtentTestManager.getTest().log(status, msg.toString(),
-					MediaEntityBuilder.createScreenCaptureFromBase64String(base64).build());
+			String imgHtml = buildImgHtml(base64);
+			ExtentTestManager.getTest().log(status, msg.toString() + imgHtml);
 		}
 	}
 }
