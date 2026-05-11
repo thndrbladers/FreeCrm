@@ -136,6 +136,9 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.2.5</version>
 				<configuration>
+					<suiteXmlFiles>
+						<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+					</suiteXmlFiles>
 					<!-- argLine: JVM arguments passed to the test process at
 					startup.
 					     These must be set here (not in code) because the JUL bridge
@@ -152,9 +155,11 @@
 					       Remove the entire <argLine> element below.
 					       Selenium will fall back to its own silent JUL defaults
 					       and nothing will appear in your log file from it. -->
-					<argLine>
-						-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager</argLine>
+
+
+					<argLine>-Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager</argLine>
 				</configuration>
+
 			</plugin>
 		</plugins>
 	</build>
