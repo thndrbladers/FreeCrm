@@ -1,0 +1,32 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="FCRM_1 Suite" parallel="false">
+
+	<parameter name="author" value="akkunache.dhandhanadhan@mailinator.com" />
+	<parameter name="application" value="Free CRM" />
+
+	<listeners>
+
+		<listener class-name="com.freecrm.reports.ExtentReportsListener" />
+		<listener
+			class-name="com.freecrm.listeners.FreeCrmAnnotationTransformer" />
+
+	</listeners>
+
+	<test name="FCRM_1_LoginPageTest">
+
+		<classes>
+
+			<class name="com.freecrm.tests.FCRM_2_LoginPageTest">
+
+				<methods>
+					<include name="verifyLoginPageTitle" />
+				</methods>
+
+			</class>
+
+		</classes>
+
+	</test>
+
+</suite>
