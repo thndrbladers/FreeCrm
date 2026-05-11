@@ -119,8 +119,6 @@ public class Base {
 
 	private void loadProperties() {
 
-		System.out.println("Environment identified : ---------------->" + environment);
-
 		String file = environment + ".properties";
 
 		try (InputStream is = getClass().getClassLoader().getResourceAsStream(file)) {

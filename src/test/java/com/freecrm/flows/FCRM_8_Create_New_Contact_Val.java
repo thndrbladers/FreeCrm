@@ -25,7 +25,7 @@ public class FCRM_8_Create_New_Contact_Val extends Base {
 	public void setUp() {
 		initialization();
 		this.loginPage = new LoginPage();
-		this.homePage = loginPage.login("freecrm.rdg@mailinator.com", "Freecrm.rdg@123");
+		this.homePage = loginPage.login(Base.getConfig("username"), Base.getConfig("password"));
 		this.contactPage = homePage.clickContacts();
 
 	}
