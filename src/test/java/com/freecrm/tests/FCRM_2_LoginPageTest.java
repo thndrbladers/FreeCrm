@@ -23,8 +23,8 @@ public class FCRM_2_LoginPageTest extends Base {
 
 	}
 
-	@Test(description = "Test to verify that user cannot login with invalid credentials", groups = {
-			"regression" }, dataProvider = "negativeLoginData")
+	@Test(description = "Test to verify that user cannot login with invalid credentials", groups = { "smoke", "FCRM_2",
+			"Release_1" }, dataProvider = "negativeLoginData")
 	public void negative_login_test(String email, String password) {
 
 		ExtentSoftAssert sa = new ExtentSoftAssert();
@@ -32,6 +32,15 @@ public class FCRM_2_LoginPageTest extends Base {
 		sa.assertTrue(loginPage.isInvalidLoginErrorDisplayed(),
 				"Invalid login error message should be displayed for email: " + email + " and password: " + password);
 
+		sa.assertAll();
+	}
+
+	@Test(description = "To verify Login page title", groups = { "smoke", "FCRM_1", "Release_1" })
+	public void verifyLoginPageTitle() {
+		ExtentSoftAssert sa = new ExtentSoftAssert();
+		String title = loginPage.getPageTitle();
+		StepLogger.info("Login page title: " + title);
+		sa.assertEquals(title, "Free CRM", "Login page title should be 'Free CRM'");
 		sa.assertAll();
 	}
 
