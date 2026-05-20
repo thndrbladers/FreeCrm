@@ -24,6 +24,9 @@ public class HomePage extends Base {
 	@FindBy(xpath = "//span[text()='Contacts']")
 	WebElement contactsMenu;
 
+	@FindBy(xpath = "//span[text()='Companies']")
+	WebElement companiesMenu;
+
 	@FindBy(xpath = "//div[@id='main-nav']//a/i/following-sibling::span")
 	List<WebElement> mainMenuItems;
 
@@ -60,6 +63,21 @@ public class HomePage extends Base {
 				.invisibilityOf(getDriver().findElement(By.xpath("//div[contains(@class,'inline loader')]"))));
 
 		return new ContactPage();
+
+	}
+
+	public CompaniesPage clickCompanies() {
+		StepLogger.info("Clicking on Companies menu");
+		companiesMenu.click();
+		// To collapse the user menu if it's open and blocking the view of the contacts
+		// page
+		getDriver().findElement(By.xpath("//span[@class='user-display']")).click();
+		getWait().until(ExpectedConditions
+				.invisibilityOf(getDriver().findElement(By.xpath("//div[contains(@class,'inline loader')]"))));
+		getWait().until(ExpectedConditions
+				.invisibilityOf(getDriver().findElement(By.xpath("//div[contains(@class,'inline loader')]"))));
+
+		return new CompaniesPage();
 
 	}
 

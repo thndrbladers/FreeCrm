@@ -78,51 +78,52 @@ public class ContactPage extends Base {
 		PageFactory.initElements(getDriver(), this);
 	}
 
+	public WebElement getNoRecordsFoundMessage() {
+		return noRecordsFoundMessage;
+	}
+
 	public void clickInputSearchOption(String section, String searchOption) {
-		StepLogger.info(
-				"Selecting '" + searchOption + "' from '" + section + "' search options");
+		StepLogger.info("Selecting '" + searchOption + "' from '" + section + "' search options");
 
 		getDriver().findElement(By.xpath("//label[text()='" + section
 				+ "']/parent::div//i/following-sibling::span[text()='" + searchOption + "']")).click();
 	}
 
 	public void selectAction(String action) {
-		StepLogger.info( "Selecting '" + action + "' from action dropdown");
+		StepLogger.info("Selecting '" + action + "' from action dropdown");
 		actionDropdown.click();
 		getDriver().findElement(By.xpath("(//div[@role='option']/span[text()='" + action + "'])[1]")).click();
 	}
 
 	public void clickCheckmark(String confirmation) {
-		StepLogger.info(
-				"Clicking checkmark button and confirming with '" + confirmation + "'");
+		StepLogger.info("Clicking checkmark button and confirming with '" + confirmation + "'");
 		checkmarkButton.click();
 		getDriver().findElement(By.xpath("//div[@class='actions']/button[text()='" + confirmation + "']")).click();
 	}
 
 	/** Clicks the Create button to open the new contact form */
 	public void clickCreate() {
-		StepLogger.info( "Clicking Create button to open new contact form");
+		StepLogger.info("Clicking Create button to open new contact form");
 		createButton.click();
 	}
 
 	public void selectAllContacts() {
-		StepLogger.info( "Selecting all contacts using the select all checkbox");
+		StepLogger.info("Selecting all contacts using the select all checkbox");
 		selectAllCheckbox.click();
 	}
 
 	public boolean isNoContactsFoundMessageDisplayed() {
-		StepLogger.info( "Checking if 'No records found' message is displayed");
+		StepLogger.info("Checking if 'No records found' message is displayed");
 		return noRecordsFoundMessage.isDisplayed();
 	}
 
 	/** Fills all form fields for a single contact */
 	public void fillContactForm(String firstName, String lastName, String email, String street, String city,
 			String state, String postCode, String country, String phone, String countryCode) {
-		StepLogger.info(
-				"Filling contact form with provided details - First Name: " + firstName + ", Last Name: " + lastName
-						+ ", Email: " + email + ", Street: " + street + ", City: " + city + ", State: " + state
-						+ ", Post Code: " + postCode + ", Country: " + country + ", Phone: " + phone
-						+ ", Country Code: " + countryCode);
+		StepLogger.info("Filling contact form with provided details - First Name: " + firstName + ", Last Name: "
+				+ lastName + ", Email: " + email + ", Street: " + street + ", City: " + city + ", State: " + state
+				+ ", Post Code: " + postCode + ", Country: " + country + ", Phone: " + phone + ", Country Code: "
+				+ countryCode);
 		firstNameInput.sendKeys(firstName);
 		lastNameInput.sendKeys(lastName);
 		emailInput.sendKeys(email);
@@ -139,11 +140,12 @@ public class ContactPage extends Base {
 		phoneNumberInput.sendKeys(phone);
 	}
 
-	/** Clicks Save and waits for the new contact to appear in the list */
+	/**
+	 * Clicks Save and waits for the new contact to appear in the Contact edit page
+	 */
 	public void saveContact(String firstName, String lastName) {
-		StepLogger.info(
-				"Saving contact and waiting for it to appear in the contact list - First Name: " + firstName
-						+ ", Last Name: " + lastName);
+		StepLogger.info("Saving contact and waiting for it to appear in the Contact edit page - First Name: "
+				+ firstName + ", Last Name: " + lastName);
 
 		saveButton.click();
 
@@ -154,7 +156,7 @@ public class ContactPage extends Base {
 
 	public String contactPageTitle() {
 
-		StepLogger.info( "Getting contact page title");
+		StepLogger.info("Getting contact page title");
 		return getDriver().getTitle();
 	}
 
@@ -171,7 +173,7 @@ public class ContactPage extends Base {
 	}
 
 	public String contactPageUrl() {
-		StepLogger.info( "Getting contact page URL");
+		StepLogger.info("Getting contact page URL");
 		return getDriver().getCurrentUrl();
 	}
 }
