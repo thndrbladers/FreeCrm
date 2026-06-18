@@ -1,0 +1,553 @@
+{
+    "response": {
+        "success": true,
+        "version": "1.1.39",
+        "total": 50,
+        "start": 0,
+        "limit": 10,
+        "filter": null,
+        "results": [
+            {
+                "id": "8edd3a6b-88fe-4a31-bce3-5e49b16e61cb",
+                "account_id": "6b45a8c7-6797-4026-907e-fd19e3a28c3a",
+                "template_id": null,
+                "created_at": "2026-06-12T04:44:25Z",
+                "last_modified": "2026-06-12T04:44:25Z",
+                "created_by": {
+                    "id": "bd4eb89a-1e6d-457b-b020-fa143a0a440c",
+                    "email": "freecrm.rdg@mailinator.com",
+                    "name": "Rahul Dev Ghosh",
+                    "notification_opt_in": true
+                },
+                "aux_id": null,
+                "aux_source": null,
+                "aux_source_name": null,
+                "private": false,
+                "acl": [],
+                "tags": [],
+                "rating": 0,
+                "flags": {
+                    "new": false,
+                    "updated": true,
+                    "email_received": false,
+                    "task_assigned": false,
+                    "case_assigned": false,
+                    "event_assigned": false,
+                    "call_assigned": false
+                },
+                "_uri": "https://ui.freecrm.com/companies/8edd3a6b-88fe-4a31-bce3-5e49b16e61cb",
+                "_type": "Company",
+                "name": "Wanderlust App",
+                "description": null,
+                "url": null,
+                "image": null,
+                "channels": [],
+                "addresses": [
+                    {
+                        "id": "54328a0c-6782-4f85-befa-456eeed28e6a",
+                        "address": "202 Nomad St",
+                        "city": "Austin",
+                        "state": "TX",
+                        "zip": "78701",
+                        "country": "",
+                        "country_code": "",
+                        "map_url": null,
+                        "lat": null,
+                        "lng": null
+                    }
+                ],
+                "access": {
+                    "private": false,
+                    "users": null
+                }
+            },
+            {
+                "id": "9a9c6988-80b4-465d-a6d2-7f52c6d4ff47",
+                "account_id": "6b45a8c7-6797-4026-907e-fd19e3a28c3a",
+                "template_id": null,
+                "created_at": "2026-06-12T04:43:58Z",
+                "last_modified": "2026-06-12T04:43:58Z",
+                "created_by": {
+                    "id": "bd4eb89a-1e6d-457b-b020-fa143a0a440c",
+                    "email": "freecrm.rdg@mailinator.com",
+                    "name": "Rahul Dev Ghosh",
+                    "notification_opt_in": true
+                },
+                "aux_id": null,
+                "aux_source": null,
+                "aux_source_name": null,
+                "private": false,
+                "acl": [],
+                "tags": [],
+                "rating": 0,
+                "flags": {
+                    "new": false,
+                    "updated": true,
+                    "email_received": false,
+                    "task_assigned": false,
+                    "case_assigned": false,
+                    "event_assigned": false,
+                    "call_assigned": false
+                },
+                "_uri": "https://ui.freecrm.com/companies/9a9c6988-80b4-465d-a6d2-7f52c6d4ff47",
+                "_type": "Company",
+                "name": "ShieldGate",
+                "description": null,
+                "url": null,
+                "image": null,
+                "channels": [],
+                "addresses": [
+                    {
+                        "id": "101708fa-542b-4d59-8770-98fd7a87ba00",
+                        "address": "99 Cyber Rd",
+                        "city": "Tel Aviv",
+                        "state": "Central",
+                        "zip": "61000",
+                        "country": "Israel",
+                        "country_code": "IL",
+                        "map_url": null,
+                        "lat": null,
+                        "lng": null
+                    }
+                ],
+                "access": {
+                    "private": false,
+                    "users": null
+                }
+            },
+            {
+                "id": "07f28abe-3982-47c6-9c3a-1fb171f8db2e",
+                "account_id": "6b45a8c7-6797-4026-907e-fd19e3a28c3a",
+                "template_id": null,
+                "created_at": "2026-06-12T04:43:31Z",
+                "last_modified": "2026-06-12T04:43:31Z",
+                "created_by": {
+                    "id": "bd4eb89a-1e6d-457b-b020-fa143a0a440c",
+                    "email": "freecrm.rdg@mailinator.com",
+                    "name": "Rahul Dev Ghosh",
+                    "notification_opt_in": true
+                },
+                "aux_id": null,
+                "aux_source": null,
+                "aux_source_name": null,
+                "private": false,
+                "acl": [],
+                "tags": [],
+                "rating": 0,
+                "flags": {
+                    "new": false,
+                    "updated": true,
+                    "email_received": false,
+                    "task_assigned": false,
+                    "case_assigned": false,
+                    "event_assigned": false,
+                    "call_assigned": false
+                },
+                "_uri": "https://ui.freecrm.com/companies/07f28abe-3982-47c6-9c3a-1fb171f8db2e",
+                "_type": "Company",
+                "name": "Justice and Co",
+                "description": null,
+                "url": null,
+                "image": null,
+                "channels": [],
+                "addresses": [
+                    {
+                        "id": "55da5b3c-6033-497b-a8b7-bffa4df866d0",
+                        "address": "10 Law Row",
+                        "city": "Chicago",
+                        "state": "IL",
+                        "zip": "60601",
+                        "country": "",
+                        "country_code": "",
+                        "map_url": null,
+                        "lat": null,
+                        "lng": null
+                    }
+                ],
+                "access": {
+                    "private": false,
+                    "users": null
+                }
+            },
+            {
+                "id": "53715de5-309f-4757-aeee-623266b9b9c2",
+                "account_id": "6b45a8c7-6797-4026-907e-fd19e3a28c3a",
+                "template_id": null,
+                "created_at": "2026-06-12T04:43:04Z",
+                "last_modified": "2026-06-12T04:43:04Z",
+                "created_by": {
+                    "id": "bd4eb89a-1e6d-457b-b020-fa143a0a440c",
+                    "email": "freecrm.rdg@mailinator.com",
+                    "name": "Rahul Dev Ghosh",
+                    "notification_opt_in": true
+                },
+                "aux_id": null,
+                "aux_source": null,
+                "aux_source_name": null,
+                "private": false,
+                "acl": [],
+                "tags": [],
+                "rating": 0,
+                "flags": {
+                    "new": false,
+                    "updated": true,
+                    "email_received": false,
+                    "task_assigned": false,
+                    "case_assigned": false,
+                    "event_assigned": false,
+                    "call_assigned": false
+                },
+                "_uri": "https://ui.freecrm.com/companies/53715de5-309f-4757-aeee-623266b9b9c2",
+                "_type": "Company",
+                "name": "Vista Resorts",
+                "description": null,
+                "url": null,
+                "image": null,
+                "channels": [],
+                "addresses": [
+                    {
+                        "id": "6d71433e-66dc-40c2-ac63-4c9db5ea4999",
+                        "address": "500 Beach Dr",
+                        "city": "Miami",
+                        "state": "FL",
+                        "zip": "33101",
+                        "country": "",
+                        "country_code": "",
+                        "map_url": null,
+                        "lat": null,
+                        "lng": null
+                    }
+                ],
+                "access": {
+                    "private": false,
+                    "users": null
+                }
+            },
+            {
+                "id": "015a9527-0b1d-4508-b9b2-b6fa2204fe3f",
+                "account_id": "6b45a8c7-6797-4026-907e-fd19e3a28c3a",
+                "template_id": null,
+                "created_at": "2026-06-12T04:42:38Z",
+                "last_modified": "2026-06-12T04:42:38Z",
+                "created_by": {
+                    "id": "bd4eb89a-1e6d-457b-b020-fa143a0a440c",
+                    "email": "freecrm.rdg@mailinator.com",
+                    "name": "Rahul Dev Ghosh",
+                    "notification_opt_in": true
+                },
+                "aux_id": null,
+                "aux_source": null,
+                "aux_source_name": null,
+                "private": false,
+                "acl": [],
+                "tags": [],
+                "rating": 0,
+                "flags": {
+                    "new": false,
+                    "updated": true,
+                    "email_received": false,
+                    "task_assigned": false,
+                    "case_assigned": false,
+                    "event_assigned": false,
+                    "call_assigned": false
+                },
+                "_uri": "https://ui.freecrm.com/companies/015a9527-0b1d-4508-b9b2-b6fa2204fe3f",
+                "_type": "Company",
+                "name": "GreenField Ag",
+                "description": null,
+                "url": null,
+                "image": null,
+                "channels": [],
+                "addresses": [
+                    {
+                        "id": "9480523f-45b8-472f-968a-4c73dc8bb1ec",
+                        "address": "Ranch Road 10",
+                        "city": "Des Moines",
+                        "state": "IA",
+                        "zip": "50301",
+                        "country": "",
+                        "country_code": "",
+                        "map_url": null,
+                        "lat": null,
+                        "lng": null
+                    }
+                ],
+                "access": {
+                    "private": false,
+                    "users": null
+                }
+            },
+            {
+                "id": "286f92ef-ff5a-491f-942f-99ad8af40bbc",
+                "account_id": "6b45a8c7-6797-4026-907e-fd19e3a28c3a",
+                "template_id": null,
+                "created_at": "2026-06-12T04:42:11Z",
+                "last_modified": "2026-06-12T04:42:11Z",
+                "created_by": {
+                    "id": "bd4eb89a-1e6d-457b-b020-fa143a0a440c",
+                    "email": "freecrm.rdg@mailinator.com",
+                    "name": "Rahul Dev Ghosh",
+                    "notification_opt_in": true
+                },
+                "aux_id": null,
+                "aux_source": null,
+                "aux_source_name": null,
+                "private": false,
+                "acl": [],
+                "tags": [],
+                "rating": 0,
+                "flags": {
+                    "new": false,
+                    "updated": true,
+                    "email_received": false,
+                    "task_assigned": false,
+                    "case_assigned": false,
+                    "event_assigned": false,
+                    "call_assigned": false
+                },
+                "_uri": "https://ui.freecrm.com/companies/286f92ef-ff5a-491f-942f-99ad8af40bbc",
+                "_type": "Company",
+                "name": "OrbitX Systems",
+                "description": null,
+                "url": null,
+                "image": null,
+                "channels": [],
+                "addresses": [
+                    {
+                        "id": "0407afe4-54c9-4295-a78d-630d91998df4",
+                        "address": "1 Galaxy Way",
+                        "city": "Seattle",
+                        "state": "WA",
+                        "zip": "98101",
+                        "country": "",
+                        "country_code": "",
+                        "map_url": null,
+                        "lat": null,
+                        "lng": null
+                    }
+                ],
+                "access": {
+                    "private": false,
+                    "users": null
+                }
+            },
+            {
+                "id": "3ed8d00d-0936-4e7e-8321-1cf17f798d40",
+                "account_id": "6b45a8c7-6797-4026-907e-fd19e3a28c3a",
+                "template_id": null,
+                "created_at": "2026-06-12T04:41:44Z",
+                "last_modified": "2026-06-12T04:41:44Z",
+                "created_by": {
+                    "id": "bd4eb89a-1e6d-457b-b020-fa143a0a440c",
+                    "email": "freecrm.rdg@mailinator.com",
+                    "name": "Rahul Dev Ghosh",
+                    "notification_opt_in": true
+                },
+                "aux_id": null,
+                "aux_source": null,
+                "aux_source_name": null,
+                "private": false,
+                "acl": [],
+                "tags": [],
+                "rating": 0,
+                "flags": {
+                    "new": false,
+                    "updated": true,
+                    "email_received": false,
+                    "task_assigned": false,
+                    "case_assigned": false,
+                    "event_assigned": false,
+                    "call_assigned": false
+                },
+                "_uri": "https://ui.freecrm.com/companies/3ed8d00d-0936-4e7e-8321-1cf17f798d40",
+                "_type": "Company",
+                "name": "Prime Estates",
+                "description": null,
+                "url": null,
+                "image": null,
+                "channels": [],
+                "addresses": [
+                    {
+                        "id": "b6b44108-0d79-4721-8b2d-19de88da259d",
+                        "address": "202 Luxury Ln",
+                        "city": "Paris",
+                        "state": "Ile-de-France",
+                        "zip": "75001",
+                        "country": "France",
+                        "country_code": "FR",
+                        "map_url": null,
+                        "lat": null,
+                        "lng": null
+                    }
+                ],
+                "access": {
+                    "private": false,
+                    "users": null
+                }
+            },
+            {
+                "id": "186e3119-4ba9-4f65-a4fd-003b9b8b1cf4",
+                "account_id": "6b45a8c7-6797-4026-907e-fd19e3a28c3a",
+                "template_id": null,
+                "created_at": "2026-06-12T04:41:15Z",
+                "last_modified": "2026-06-12T04:41:15Z",
+                "created_by": {
+                    "id": "bd4eb89a-1e6d-457b-b020-fa143a0a440c",
+                    "email": "freecrm.rdg@mailinator.com",
+                    "name": "Rahul Dev Ghosh",
+                    "notification_opt_in": true
+                },
+                "aux_id": null,
+                "aux_source": null,
+                "aux_source_name": null,
+                "private": false,
+                "acl": [],
+                "tags": [],
+                "rating": 0,
+                "flags": {
+                    "new": false,
+                    "updated": true,
+                    "email_received": false,
+                    "task_assigned": false,
+                    "case_assigned": false,
+                    "event_assigned": false,
+                    "call_assigned": false
+                },
+                "_uri": "https://ui.freecrm.com/companies/186e3119-4ba9-4f65-a4fd-003b9b8b1cf4",
+                "_type": "Company",
+                "name": "Velocity Motors",
+                "description": null,
+                "url": null,
+                "image": null,
+                "channels": [],
+                "addresses": [
+                    {
+                        "id": "e943db05-236e-4da7-8cb1-f8a1e1bb570e",
+                        "address": "1 Speed Way",
+                        "city": "Munich",
+                        "state": "Bavaria",
+                        "zip": "80331",
+                        "country": "Germany",
+                        "country_code": "DE",
+                        "map_url": null,
+                        "lat": null,
+                        "lng": null
+                    }
+                ],
+                "access": {
+                    "private": false,
+                    "users": null
+                }
+            },
+            {
+                "id": "533df86c-0f2b-4624-9552-474330030447",
+                "account_id": "6b45a8c7-6797-4026-907e-fd19e3a28c3a",
+                "template_id": null,
+                "created_at": "2026-06-12T04:40:48Z",
+                "last_modified": "2026-06-12T04:40:48Z",
+                "created_by": {
+                    "id": "bd4eb89a-1e6d-457b-b020-fa143a0a440c",
+                    "email": "freecrm.rdg@mailinator.com",
+                    "name": "Rahul Dev Ghosh",
+                    "notification_opt_in": true
+                },
+                "aux_id": null,
+                "aux_source": null,
+                "aux_source_name": null,
+                "private": false,
+                "acl": [],
+                "tags": [],
+                "rating": 0,
+                "flags": {
+                    "new": false,
+                    "updated": true,
+                    "email_received": false,
+                    "task_assigned": false,
+                    "case_assigned": false,
+                    "event_assigned": false,
+                    "call_assigned": false
+                },
+                "_uri": "https://ui.freecrm.com/companies/533df86c-0f2b-4624-9552-474330030447",
+                "_type": "Company",
+                "name": "Neon Studios",
+                "description": null,
+                "url": null,
+                "image": null,
+                "channels": [],
+                "addresses": [
+                    {
+                        "id": "4336c871-7482-4409-b256-4b6d735123d7",
+                        "address": "77 Hollywood Blvd",
+                        "city": "Los Angeles",
+                        "state": "CA",
+                        "zip": "90028",
+                        "country": "",
+                        "country_code": "",
+                        "map_url": null,
+                        "lat": null,
+                        "lng": null
+                    }
+                ],
+                "access": {
+                    "private": false,
+                    "users": null
+                }
+            },
+            {
+                "id": "9fc28b63-c36d-4943-a6ec-09a60ec88987",
+                "account_id": "6b45a8c7-6797-4026-907e-fd19e3a28c3a",
+                "template_id": null,
+                "created_at": "2026-06-12T04:40:21Z",
+                "last_modified": "2026-06-12T04:40:21Z",
+                "created_by": {
+                    "id": "bd4eb89a-1e6d-457b-b020-fa143a0a440c",
+                    "email": "freecrm.rdg@mailinator.com",
+                    "name": "Rahul Dev Ghosh",
+                    "notification_opt_in": true
+                },
+                "aux_id": null,
+                "aux_source": null,
+                "aux_source_name": null,
+                "private": false,
+                "acl": [],
+                "tags": [],
+                "rating": 0,
+                "flags": {
+                    "new": false,
+                    "updated": true,
+                    "email_received": false,
+                    "task_assigned": false,
+                    "case_assigned": false,
+                    "event_assigned": false,
+                    "call_assigned": false
+                },
+                "_uri": "https://ui.freecrm.com/companies/9fc28b63-c36d-4943-a6ec-09a60ec88987",
+                "_type": "Company",
+                "name": "Skyline Builders",
+                "description": null,
+                "url": null,
+                "image": null,
+                "channels": [],
+                "addresses": [
+                    {
+                        "id": "caa5739d-6f43-445e-ab9b-294e4577d8c8",
+                        "address": "303 Crane Rd",
+                        "city": "Dubai",
+                        "state": "Dubai",
+                        "zip": "00000",
+                        "country": "United Arab Emirates",
+                        "country_code": "AE",
+                        "map_url": null,
+                        "lat": null,
+                        "lng": null
+                    }
+                ],
+                "access": {
+                    "private": false,
+                    "users": null
+                }
+            }
+        ]
+    },
+    "process_time": 0.15526390075683594
+}

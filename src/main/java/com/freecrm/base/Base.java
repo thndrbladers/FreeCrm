@@ -121,6 +121,7 @@ public class Base {
 		try (InputStream is = getClass().getClassLoader().getResourceAsStream(file)) {
 
 			if (is == null) {
+
 				throw new RuntimeException("Configuration file not found: " + file);
 			}
 

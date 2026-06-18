@@ -6,8 +6,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 
 public class ExcelReaderUtility {
 
@@ -50,12 +52,14 @@ public class ExcelReaderUtility {
 
 		Object[] temp;
 		List<Object[]> oArray = new ArrayList<>();
-
+		DataFormatter formatter = new DataFormatter();
 		for (int i = 0; i < rowCount; i++) {
+
 			temp = new Object[colCount];
+
 			for (int j = 0; j < colCount; j++) {
-				temp[j] = sheet.getRow(i + 1).getCell(j).getStringCellValue() == null ? ""
-						: sheet.getRow(i + 1).getCell(j).getStringCellValue();
+				Cell cell = sheet.getRow(i + 1).getCell(j);
+				temp[j] = (cell == null) ? "" : formatter.formatCellValue(cell);
 			}
 			oArray.add(temp);
 		}

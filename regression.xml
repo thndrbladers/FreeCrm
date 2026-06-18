@@ -6,9 +6,10 @@
 	    Only values that CANNOT be auto-detected belong here:
 	      - author      : who owns / triggered this suite run
 	      - application : product under test
-	    Auto-detected: OS, hostname, CI/CD platform, Java version, environment, browser (from properties file)
+	    Auto-detected: OS, hostname, CI/CD platform, Java version, environment, browser
+	(from properties file)
 	-->
-	<parameter name="author"      value="rahuldev.ghosh@freecrm.com" />
+	<parameter name="author" value="rahuldev.ghosh@freecrm.com" />
 	<parameter name="application" value="Free CRM" />
 
 	<listeners>
@@ -20,6 +21,8 @@
 			<class name="com.freecrm.flows.FCRM_8_Create_New_Contact_Val" />
 			<class name="com.freecrm.tests.FCRM_2_LoginPageTest" />
 			<class name="com.freecrm.flows.FCRM_3_LoginFlow" />
+			<class name="com.freecrm.apiTests.APILoginVal" />
+			<class name="com.freecrm.apiTests.CompaniesResponseValidation" />
 		</classes>
 	</test>
 
