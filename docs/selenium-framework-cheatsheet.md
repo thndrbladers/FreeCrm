@@ -1,4 +1,4 @@
-# Selenium Java Framework — Structure & Best Practices Cheatsheet
+# Selenium Java Framework — Structure & Best Practices
 
 ---
 
