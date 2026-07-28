@@ -3,23 +3,24 @@ package com.freecrm.apiTests;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import com.freecrm.apiclients.ApiClient;
 import com.freecrm.apiclients.LoginClient;
 import com.freecrm.pojo.LoginRequest;
 import com.freecrm.utility.ExcelReaderUtility;
-
-import io.restassured.response.Response;
 
 public class APILoginVal {
 
 	public ApiClient apiClient;
 
 	public LoginClient loginClient;
+
+	private static final Logger LOG = LogManager.getLogger(APILoginVal.class);
 
 	@BeforeMethod
 	public void setUp() {
@@ -30,6 +31,8 @@ public class APILoginVal {
 
 	@Test(dataProvider = "loginData")
 	public void apiLoginVal(String email, String password, String expectedStatusCode) {
+
+		LOG.info("Login data: email={}, password={}, expectedStatusCode={}", email, password, expectedStatusCode);
 
 		LoginRequest lr = new LoginRequest();
 

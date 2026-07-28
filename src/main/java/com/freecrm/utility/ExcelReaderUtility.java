@@ -4,22 +4,33 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 
 public class ExcelReaderUtility {
 
+	private static final Logger LOG = LogManager.getLogger(ExcelReaderUtility.class);
+
 	XSSFWorkbook workbook;
 	XSSFSheet sheet;
 	private static final String BASE_PATH = System.getProperty("user.dir") + "/src/main/java/com/freecrm/testdata/";
+	private String fileName;
+	private String sheetName;
 
 	public ExcelReaderUtility(String sheetName, String fileName) {
 
 		try (FileInputStream fis = new FileInputStream(BASE_PATH + fileName)) {
+			LOG.info("Trying to get file {} and sheet {}", fileName, sheetName);
+			this.fileName = fileName;
+			this.sheetName = sheetName;
 			this.workbook = new XSSFWorkbook(fis);
 			this.sheet = workbook.getSheet(sheetName);
 
@@ -61,6 +72,8 @@ public class ExcelReaderUtility {
 				Cell cell = sheet.getRow(i + 1).getCell(j);
 				temp[j] = (cell == null) ? "" : formatter.formatCellValue(cell);
 			}
+			LOG.info("Read data from Excel file '{}' | Sheet '{}' | Row {}: {}", fileName, sheetName, i + 1,
+					Arrays.toString(temp));
 			oArray.add(temp);
 		}
 

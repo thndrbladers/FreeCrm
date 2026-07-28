@@ -33,6 +33,7 @@ public class Base {
 	private final String environment;
 
 	public Base() {
+
 		this.property = new Properties();
 		environment = resolveEnvironment();
 		loadProperties();
@@ -81,8 +82,9 @@ public class Base {
 		localDriver.manage().window().maximize();
 		localDriver.manage().timeouts()
 				.pageLoadTimeout(Duration.ofSeconds(Integer.valueOf(getProperty("pageloadTimeout"))));
-		localDriver.manage().timeouts()
-				.implicitlyWait(Duration.ofSeconds(Integer.valueOf(getProperty("implicitWait"))));
+		// localDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Integer.valueOf(getProperty("implicitWait"))));
+
+		localDriver.manage().timeouts().implicitlyWait(Duration.ZERO);
 		localDriver.get(getProperty("url"));
 
 		threadLocalWait

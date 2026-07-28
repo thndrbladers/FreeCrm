@@ -26,6 +26,9 @@ public class HomePage extends Base {
 
 	@FindBy(xpath = "//span[text()='Companies']")
 	WebElement companiesMenu;
+	
+	@FindBy(xpath="//div[@id='main-nav']//a[@href='/deals']")
+	WebElement dealsMenu;
 
 	@FindBy(xpath = "//div[@id='main-nav']//a/i/following-sibling::span")
 	List<WebElement> mainMenuItems;
@@ -37,6 +40,17 @@ public class HomePage extends Base {
 	public boolean isHomeMenuDisplayed() {
 		StepLogger.info("Checking if Home menu is displayed");
 		return homeMenu.isDisplayed();
+	}
+	
+	public DealsPage clickDealsMenu() {
+		
+		getWait().until(ExpectedConditions.elementToBeClickable(dealsMenu));
+		dealsMenu.click();
+		
+		return new DealsPage();
+		
+		
+		
 	}
 
 	public void clickMainMenuItem(String menuItem) {
